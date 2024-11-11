@@ -39,6 +39,20 @@ namespace HotelFlightAPI.Controllers
             return hotelRoom;
         }
 
+        // **New Buy functionality**
+        // This method simulates "buying" a hotel room by returning its details for purchase
+        [HttpGet("buy/{id}")]
+        public async Task<ActionResult<HotelRoom>> BuyHotelRoom(int id)
+        {
+            var hotelRoom = await _context.HotelRooms.FindAsync(id);
+            if (hotelRoom == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(hotelRoom); // Return the room details for purchasing
+        }
+
         // POST: api/HotelRoom
         [HttpPost]
         public async Task<ActionResult<HotelRoom>> CreateHotelRoom(HotelRoom hotelRoom)
@@ -94,7 +108,7 @@ namespace HotelFlightAPI.Controllers
 
             return NoContent();
         }
-
+        
         private bool HotelRoomExists(int id)
         {
             return _context.HotelRooms.Any(e => e.Id == id);
