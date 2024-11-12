@@ -16,6 +16,23 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 var app = builder.Build();
 
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        builder =>
+        {
+            builder.WithOrigins("https://hotelflightapplication.onrender.com")
+                   .AllowAnyHeader()
+                   .AllowAnyMethod();
+        });
+});
+
+app.UseCors();
+
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
+
 // Configure the HTTP request pipeline.
 
 
@@ -23,7 +40,7 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
