@@ -14,7 +14,16 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-// Configure CORS before calling builder.Build()
+
+//var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+//builder.Services.AddDbContext<ApplicationDbContext>(options =>
+//    options.UseSqlServer(connectionString));
+
+
+var app = builder.Build();
+
+
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(
@@ -26,9 +35,14 @@ builder.Services.AddCors(options =>
         });
 });
 
-var app = builder.Build();
-
 app.UseCors();
+
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
+
+
+
+
 
 // Configure the HTTP request pipeline.
 app.UseSwagger();
