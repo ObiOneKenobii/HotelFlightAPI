@@ -15,14 +15,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 
-//var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-
-//builder.Services.AddDbContext<ApplicationDbContext>(options =>
-//    options.UseSqlServer(connectionString));
-
-
-var app = builder.Build();
-
 
 builder.Services.AddCors(options =>
 {
@@ -34,6 +26,16 @@ builder.Services.AddCors(options =>
                    .AllowAnyMethod();
         });
 });
+
+//var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+//builder.Services.AddDbContext<ApplicationDbContext>(options =>
+//    options.UseSqlServer(connectionString));
+
+
+var app = builder.Build();
+
+
 
 app.UseCors();
 
